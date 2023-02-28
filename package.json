@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-three/drei": "^9.56.28",
     "@react-three/fiber": "^8.11.5",
     "@types/react": "~18.0.27",
     "@types/three": "^0.149.0",

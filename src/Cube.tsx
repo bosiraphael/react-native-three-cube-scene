@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 
 function Cube() {
   const meshRef = useRef<any>();
+  const [active, setActive] = useState(false);
 
   useFrame(() => {
     if (meshRef.current) {
@@ -12,9 +13,9 @@ function Cube() {
   });
 
   return (
-    <mesh ref={meshRef}>
+    <mesh ref={meshRef} position={[0, 0, 0]} onClick={() => setActive(!active)}>
       <boxGeometry />
-      <meshStandardMaterial color="#f3f3f3" />
+      <meshStandardMaterial color={active ? "hotpink" : "orange"} />
     </mesh>
   );
 }
@@ -26,6 +27,10 @@ export default function CubeScene() {
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <Cube />
+      <mesh position={[0, -3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[100, 100]} />
+        <meshStandardMaterial color="#888888" />
+      </mesh>
     </Canvas>
   );
 }
