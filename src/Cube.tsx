@@ -5,15 +5,20 @@ function Cube() {
   const meshRef = useRef<any>();
   const [active, setActive] = useState(false);
 
-  useFrame(() => {
+  useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x += 0.01;
-      meshRef.current.rotation.y += 0.01;
+      meshRef.current.rotation.x += delta * 0.5;
+      meshRef.current.rotation.y += delta * 0.5;
     }
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]} onClick={() => setActive(!active)}>
+    <mesh
+      ref={meshRef}
+      position={[0, 0, 0]}
+      scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
+      onClick={() => setActive(!active)}
+    >
       <boxGeometry />
       <meshStandardMaterial color={active ? "hotpink" : "orange"} />
     </mesh>
