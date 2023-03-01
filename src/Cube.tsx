@@ -8,7 +8,7 @@ import Animated, {
   useAnimatedSensor,
   SensorType,
 } from "react-native-reanimated";
-import { Button, View } from "react-native";
+import { Pressable, View, StyleSheet, Text } from "react-native";
 
 function Cube({
   x,
@@ -62,9 +62,7 @@ export default function CubeScene() {
   });
 
   const eventHandler = useAnimatedGestureHandler({
-    onStart: (event, ctx) => {
-      console.log("onStart");
-    },
+    onStart: (event, ctx) => {},
     onActive: (event, ctx) => {
       x.value = startingPosition + event.translationX;
       y.value = startingPosition + event.translationY;
@@ -95,12 +93,35 @@ export default function CubeScene() {
         </Animated.View>
       </PanGestureHandler>
 
-      <Button
-        title="Toggle Gyroscope"
+      <Pressable
+        style={[styles.button, gyroscope && styles.buttonActive]}
         onPress={() => {
           setGyroscope(!gyroscope);
         }}
-      />
+      >
+        <Text style={styles.buttonText}>
+          {gyroscope ? "Disable Gyroscope" : "Enable Gyroscope"}
+        </Text>
+      </Pressable>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    position: "absolute",
+    bottom: 30,
+    backgroundColor: "#444",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+  buttonActive: {
+    backgroundColor: "#b30000",
+  },
+  buttonText: {
+    fontSize: 18,
+    color: "#fff",
+  },
+});
